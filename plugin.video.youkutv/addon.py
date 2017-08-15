@@ -2082,14 +2082,38 @@ def play(vid, playContinue=False):
     # Input: movurl, movdat
     # Output: playlist
     try:
+
+        segs = stream['segs']
+        urls = [seg.get('cdn_url') for seg in segs]
+        urls = filter(None, urls)
+
         # construct playlist
         playlist = xbmc.PlayList(1)
         playlist.clear()
 
-        title = movdat['video']['title']
-        listitem=xbmcgui.ListItem(title)
-        listitem.setInfo(type="Video",infoLabels={"Title":title})
-        playlist.add(movurl, listitem)
+        if settings_data['play_type'][settings['play']] == 'concatenate' and resolution_map[resolution] == 'flv':
+            vc.start(urls)
+            port = vc.get_port()
+            assert(port != 0)
+            listitem=xbmcgui.ListItem(movdat['video']['title'])
+            listitem.setInfo(type="Video", infoLabels={"Title":movdat['video']['title']})
+            playlist.add('http://127.0.0.1:%d' % port, listitem)
+        elif settings_data['play_type'][settings['play']] == 'list':
+            for i in range(len(urls)):
+                title =movdat['video']['title'] + u" - 第"+str(i+1)+"/"+str(len(urls)) + u"节"
+                listitem=xbmcgui.ListItem(title)
+                listitem.setInfo(type="Video",infoLabels={"Title":title})
+                playlist.add(urls[i], listitem)
+        else:
+            playurl = 'stack://' + ' , '.join(urls)
+            listitem=xbmcgui.ListItem(movdat['video']['title'])
+            listitem.setInfo(type="Video", infoLabels={"Title":movdat['video']['title']})
+            playlist.add(playurl, listitem)
+
+        # title = movdat['video']['title']
+        # listitem=xbmcgui.ListItem(title)
+        # listitem.setInfo(type="Video",infoLabels={"Title":title})
+        # playlist.add(movurl, listitem)
     except:
         xbmc.executebuiltin( "Dialog.Close(busydialog)" )
         xbmcgui.Dialog().ok('提示框', '[playlist]解析地址异常，无法播放')
