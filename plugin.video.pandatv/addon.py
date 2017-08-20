@@ -136,7 +136,7 @@ def get_panda_url(roomid):
     topic = data["roominfo"]["name"]
     author = data['hostinfo']['name']
     view_count = data['roominfo']['person_num']
-    title = TITLE_PATTERN.format(topic=topic, author=author, view_count=view_count)
+    title = TITLE_PATTERN.format(topic=topic.encode('utf-8'), author=author.encode('utf-8'), view_count=view_count.encode('utf-8'))
     room_key = data["videoinfo"]["room_key"]
     plflag = data["videoinfo"]["plflag"].split("_")
     status = data["videoinfo"]["status"]
