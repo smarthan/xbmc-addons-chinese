@@ -14,6 +14,9 @@ from urlparse import parse_qsl
 
 import xbmc,xbmcgui,urllib2,re,xbmcplugin
 
+TITLE_PATTERN = '{author}:{topic}:{view_count}'
+
+
 def post(url, data):
     req = urllib2.Request(url)
     #enable cookie
@@ -99,7 +102,10 @@ def get_panda_url(roomid):
         return
 
     data = api_json["data"]
-    title = data["roominfo"]["name"]
+    topic = data["roominfo"]["name"]
+    author = data['hostinfo']['name']
+    view_count = data['roominfo']['person_num']
+    title = TITLE_PATTERN.format(topic=topic, author=author, view_count=view_count)
     room_key = data["videoinfo"]["room_key"]
     plflag = data["videoinfo"]["plflag"].split("_")
     status = data["videoinfo"]["status"]
