@@ -60,7 +60,7 @@ def all_list():
     room_infos = RE_ROOM_INFOS.findall(html, re.MULTILINE)
     room_imgs = RE_ROOM_IMG.findall(html)
 
-    for i, room_id enumerate(room_ids):
+    for i, room_id in enumerate(room_ids):
         room_name, author, view_count = room_infos[i]
         img = room_imgs[i]
         title = TITLE_PATTERN.format(topic=room_name, author=author, view_count=view_count)
