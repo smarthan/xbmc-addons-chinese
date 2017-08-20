@@ -39,6 +39,12 @@ def list_categories():
     obj = json.loads(f.read())
 
     listing=[]
+
+    list_item = xbmcgui.ListItem(label='全部直播')
+    # list_item.setProperty('fanart_image', game['img'])
+    url='{0}?action=all'.format(_url)
+    listing.append((url, list_item, True))
+
     for game in obj['data']:
         list_item = xbmcgui.ListItem(label=game['cname'], thumbnailImage=game['img'])
         list_item.setProperty('fanart_image', game['img'])
