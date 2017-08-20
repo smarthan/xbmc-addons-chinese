@@ -91,7 +91,7 @@ def room_list(game_id):
 
     listing=[]
     for room in obj['data']['items']:
-        title = TITLE_PATTERN.format(topic=room['name'], author=room['userinfo']['nickName'], view_count=room['person_num'])
+        title = TITLE_PATTERN.format(topic=room['name'].encode('utf-8'), author=room['userinfo']['nickName'].encode('utf-8'), view_count=room['person_num'].encode('utf-8'))
         list_item = xbmcgui.ListItem(label=title, thumbnailImage=room['pictures']['img'])
         list_item.setProperty('fanart_image', room['pictures']['img'])
         url='{0}?action=play&room_id={1}'.format(_url, room['id'])
