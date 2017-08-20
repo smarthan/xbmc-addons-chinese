@@ -1,3 +1,15 @@
+# About this fork
+
+目前这个 fork 维护的几个插件：
+
+* YouKu TV - plugin.video.youkutv - Online tv and movies from www.youku.com, with wonderful GUI
+* 奇艺视频(QIYI) - plugin.video.qiyi - Online videos from www.iqiyi.com
+* 斗鱼TV(douyutv) - plugin.video.douyutv2 - Online videos from www.douyutv.com
+* 熊猫TV - plugin.video.pandatv - Online videos from panda.tv
+
+因为这些插件上游的维护活跃度都已经很低了，已经没多少人在用了，所以暂时没有动力合并到上游。
+只要我本人在使用这些插件，应该就会持续维护这些插件。
+
 # Introduction
 
 This project is an repository for open source Addon scripts, plugins, and skins for XBMC Media Center. Specially for Chinese Language speaking people.
