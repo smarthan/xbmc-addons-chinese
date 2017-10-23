@@ -81,7 +81,7 @@ def list_categories():
 
 
 def room_list(game_id):
-    if game_id == 'all':
+    if game_id == 'ALL':
         apiurl = 'http://api.m.panda.tv/ajax_live_lists'
         params = 'pageno=1&pagenum=100&status=2&order=person_num&sproom=1&__version=2.0.1.1481&__plat=android&banner=1'
     else:
@@ -181,7 +181,7 @@ def router(paramstring):
             play_video(params['room_id'])
         elif params['action'] == 'all':
             # all_list()
-            room_list(params['all'])
+            room_list('ALL')
     else:
         # If the plugin is called from Kodi UI without any parameters,
         # display the list of video categories
