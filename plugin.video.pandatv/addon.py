@@ -59,31 +59,34 @@ def list_categories():
     xbmcplugin.endOfDirectory(_handle)
 
 
-def all_list():
-    html = urllib2.urlopen('https://www.panda.tv/all').read()
-
-    room_ids = re.findall(r'<a href="/\d+" class="video-list-item-wrap" data-id="(\d+)">', html)
-    room_infos = RE_ROOM_INFOS.findall(html, re.MULTILINE)
-    room_imgs = RE_ROOM_IMG.findall(html)
-
-    listing=[]
-    for i, room_id in enumerate(room_ids):
-        room_name, author, view_count = room_infos[i]
-        img = room_imgs[i]
-        title = TITLE_PATTERN.format(topic=room_name, author=author, view_count=view_count)
-        list_item = xbmcgui.ListItem(label=title, thumbnailImage=img)
-        list_item.setProperty('fanart_image', img)
-        url='{0}?action=play&room_id={1}'.format(_url, room_id)
-        is_folder=False
-        listing.append((url, list_item, is_folder))
-    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
-    xbmcplugin.endOfDirectory(_handle)
+# def all_list():
+#     html = urllib2.urlopen('https://www.panda.tv/all').read()
+# 
+#     room_ids = re.findall(r'<a href="/\d+" class="video-list-item-wrap" data-id="(\d+)">', html)
+#     room_infos = RE_ROOM_INFOS.findall(html, re.MULTILINE)
+#     room_imgs = RE_ROOM_IMG.findall(html)
+# 
+#     listing=[]
+#     for i, room_id in enumerate(room_ids):
+#         room_name, author, view_count = room_infos[i]
+#         img = room_imgs[i]
+#         title = TITLE_PATTERN.format(topic=room_name, author=author, view_count=view_count)
+#         list_item = xbmcgui.ListItem(label=title, thumbnailImage=img)
+#         list_item.setProperty('fanart_image', img)
+#         url='{0}?action=play&room_id={1}'.format(_url, room_id)
+#         is_folder=False
+#         listing.append((url, list_item, is_folder))
+#     xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+#     xbmcplugin.endOfDirectory(_handle)
 
 
 def room_list(game_id):
-
-    apiurl = "http://api.m.panda.tv/ajax_get_live_list_by_cate"
-    params = "__plat=iOS&__version=1.0.5.1098&cate={ename}&order=person_num&pageno=1&pagenum=100&status=2".format(ename=game_id)
+    if game_id == 'all':
+        apiurl = 'http://api.m.panda.tv/ajax_live_lists'
+        params = 'pageno=1&pagenum=100&status=2&order=person_num&sproom=1&__version=2.0.1.1481&__plat=android&banner=1'
+    else:
+        apiurl = "http://api.m.panda.tv/ajax_get_live_list_by_cate"
+        params = "__plat=iOS&__version=1.0.5.1098&cate={ename}&order=person_num&pageno=1&pagenum=100&status=2".format(ename=game_id)
 
     returndata = post(apiurl, params);
 
@@ -177,7 +180,8 @@ def router(paramstring):
             # Play a video from a provided URL.
             play_video(params['room_id'])
         elif params['action'] == 'all':
-            all_list()
+            # all_list()
+            room_list(params['all'])
     else:
         # If the plugin is called from Kodi UI without any parameters,
         # display the list of video categories
