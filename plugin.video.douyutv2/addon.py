@@ -34,7 +34,8 @@ NEXT_PAGE=__language__(32001)
 headers={'Accept':
      'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Accept-Encoding': 'gzip, deflate','User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:16.0) Gecko/20100101 Firefox/16.0'}
 
-APPKEY = 'Y237pxTx2In5ayGz' #from android-hd client (https://gist.github.com/ERioK/d73f76dbb0334618ff905f1bf3363401)
+# APPKEY = 'Y237pxTx2In5ayGz' #from android-hd client (https://gist.github.com/ERioK/d73f76dbb0334618ff905f1bf3363401)
+APPKEY = 'zNzMV1y4EMxOHS6I5WKm' # from https://github.com/soimort/you-get/commit/04b5f9f95adf4f584b26417bff19950cc7a46ef4#diff-d0fafb6251bc8f273f8afa0256ffd6f1R54
 
 #Initialize logging
 logging.getLogger().setLevel(logging.INFO)
@@ -222,9 +223,9 @@ def get_play_item(roomid, cdn):
         if match.group(0) != u'0':
             roomid = match.group(1)
 
-    authstr = 'room/{0}?aid=androidhd1&cdn={1}&client_sys=android&time={2}'.format(roomid, cdn, int(time.time()))
+    authstr = 'room/{0}?aid=wp&cdn={1}&client_sys=wp&time={2}'.format(roomid, cdn, int(time.time()))
     authmd5 = hashlib.md5((authstr + APPKEY).encode()).hexdigest()
-    url = 'https://capi.douyucdn.cn/api/v1/{0}&auth={1}'.format(authstr,authmd5)
+    url = 'http://www.douyutv.com/api/v1/{0}&auth={1}'.format(authstr, authmd5)
     res = requests.get(url).json()
 
     status = res.get('error', 0)
