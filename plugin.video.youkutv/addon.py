@@ -2139,7 +2139,7 @@ def get_movdat_from_vid(vid):
     cna = res.headers['etag'][1:-1]
     query = urllib.urlencode(dict(
         vid       = vid,
-        ccode     = '0401',
+        ccode     = '0501',
         client_ip = '192.168.1.1',
         utid      = cna,
         client_ts = time.time() / 1000

@@ -6,6 +6,7 @@
 * 奇艺视频(QIYI) - plugin.video.qiyi - Online videos from www.iqiyi.com
 * 斗鱼TV(douyutv) - plugin.video.douyutv2 - Online videos from www.douyutv.com
 * 熊猫TV - plugin.video.pandatv - Online videos from panda.tv
+* 优酷(老) - plugin.video.youku - Online video from youku.com
 
 因为这些插件上游的维护活跃度都已经很低了，已经没多少人在用了，所以暂时没有动力合并到上游。
 只要我本人在使用这些插件，应该就会持续维护这些插件。
