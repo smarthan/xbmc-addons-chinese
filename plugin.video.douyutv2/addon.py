@@ -218,7 +218,7 @@ def get_room(roomid,cdn):
 
 def get_play_item(roomid, cdn):
     html = requests.get("http://www.douyu.com/%s" % roomid, headers=headers).text
-    match = re.search(r'"room_id"\s*:\s*(\d+),', html)
+    match = re.search(r'"room_id"\s*:\s*(\d+),', html) or re.search(r'data-onlineid=(\d+)', html)
     if match:
         if match.group(0) != u'0':
             roomid = match.group(1)
@@ -226,7 +226,11 @@ def get_play_item(roomid, cdn):
     authstr = 'room/{0}?aid=wp&cdn={1}&client_sys=wp&time={2}'.format(roomid, cdn, int(time.time()))
     authmd5 = hashlib.md5((authstr + APPKEY).encode()).hexdigest()
     url = 'http://www.douyutv.com/api/v1/{0}&auth={1}'.format(authstr, authmd5)
-    res = requests.get(url, headers=headers).json()
+    try:
+        res = requests.get(url, headers=headers).json()
+    except ValueError as e:
+        logging.error('ApiError: %s' % str(e))
+        return '', None
 
     status = res.get('error', 0)
     if status is not 0:

@@ -11,6 +11,9 @@
     接口能用，但是非常慢，未定位问题
 
 * 斗鱼TV(douyutv) - plugin.video.douyutv2 - Online videos from www.douyutv.com
+
+    支持弹幕。
+
 * 熊猫TV - plugin.video.pandatv - Online videos from panda.tv
 * 优酷(老) - plugin.video.youku - Online video from youku.com
 
