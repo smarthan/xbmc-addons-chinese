@@ -32,7 +32,7 @@ API_SECRET = u'bLFlashflowlad92'
 PAGE_LIMIT=10
 NEXT_PAGE=__language__(32001)
 headers={'Accept':
-     'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Accept-Encoding': 'gzip, deflate','User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:16.0) Gecko/20100101 Firefox/16.0'}
+     'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8','Accept-Encoding': 'gzip, deflate','User-Agent':'Mozilla/5.0 (iPad; CPU OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12B466 Safari/600.1.4'}
 
 # APPKEY = 'Y237pxTx2In5ayGz' #from android-hd client (https://gist.github.com/ERioK/d73f76dbb0334618ff905f1bf3363401)
 APPKEY = 'zNzMV1y4EMxOHS6I5WKm' # from https://github.com/soimort/you-get/commit/04b5f9f95adf4f584b26417bff19950cc7a46ef4#diff-d0fafb6251bc8f273f8afa0256ffd6f1R54
@@ -217,7 +217,7 @@ def get_room(roomid,cdn):
 
 
 def get_play_item(roomid, cdn):
-    html = urllib2.urlopen("http://www.douyu.com/%s" % (roomid)).read().decode('utf-8')
+    html = requests.get("http://www.douyu.com/%s" % roomid, headers=headers).text
     match = re.search(r'"room_id"\s*:\s*(\d+),', html)
     if match:
         if match.group(0) != u'0':
@@ -226,7 +226,7 @@ def get_play_item(roomid, cdn):
     authstr = 'room/{0}?aid=wp&cdn={1}&client_sys=wp&time={2}'.format(roomid, cdn, int(time.time()))
     authmd5 = hashlib.md5((authstr + APPKEY).encode()).hexdigest()
     url = 'http://www.douyutv.com/api/v1/{0}&auth={1}'.format(authstr, authmd5)
-    res = requests.get(url).json()
+    res = requests.get(url, headers=headers).json()
 
     status = res.get('error', 0)
     if status is not 0:
